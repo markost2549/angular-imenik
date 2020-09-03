@@ -1,0 +1,9 @@
+.table-hover tbody tr:hover {
+  color: white;
+  background-color: rgb(222, 35, 35);
+  /* font-weight: 500; */
+}
+
+.table .thead-light th {
+  color: rgb(222, 35, 35);
+}
