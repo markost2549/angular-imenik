@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { Imenik } from './imenik-list/imenik.model';
+import { Imenik } from './imenik.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImenikService {
-  baseUrl = 'http://10.0.0.6:3000';
+  baseUrl = 'http://localhost:3000';
+
+  imenikChanged = new Subject<Imenik[]>();
 
   constructor(private http: HttpClient) {}
 
@@ -18,23 +20,26 @@ export class ImenikService {
     }),
   };
 
-  getImenik(): Observable<Imenik | any> {
-    return this.http
-      .get<Imenik>(this.baseUrl + '/imenik/')
-      .pipe(retry(1), catchError(this.errorHandle));
+  getImeniks(): Observable<Imenik[]> {
+    return this.http.get<Imenik[]>(this.baseUrl + '/imenik', this.httpOptions);
   }
 
-  // Error handling
-  private errorHandle(error): any {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(errorMessage);
+  getImenikById(id: number): Observable<Imenik> {
+    return this.http.get<Imenik>(
+      this.baseUrl + '/imenik/' + id,
+      this.httpOptions
+    );
+  }
+
+  updateImenik(imenik: Imenik, id: number): Observable<Imenik> {
+    return this.http.put<Imenik>(
+      this.baseUrl + '/imenik/' + id,
+      imenik,
+      this.httpOptions
+    );
+  }
+
+  deleteImenik(id: number): Observable<any> {
+    return this.http.delete(this.baseUrl + '/imenik/' + id, this.httpOptions);
   }
 }
