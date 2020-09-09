@@ -1,9 +1,9 @@
 export class Imenik {
   constructor(
-    public id: number,
+    public imenikId: number,
+    public naziv: string,
     public odeljenje: string,
     public lokacija: string,
-    public name: string,
-    public phoneNumber: string
+    public broj: string
   ) {}
 }
