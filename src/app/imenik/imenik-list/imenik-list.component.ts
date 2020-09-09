@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ImenikService } from '../imenik.service';
 import { Imenik } from '../imenik.model';
 import { Subscription } from 'rxjs';
@@ -42,6 +42,11 @@ export class ImenikListComponent implements OnInit {
       });
       console.log('Imenik deleted');
     }
+  }
+
+  isAdminUser(): void {
+    this.isAdmin = !this.isAdmin;
+    this.ngOnInit();
   }
 
   clearSearch(): any {

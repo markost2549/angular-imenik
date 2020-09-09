@@ -5,5 +5,9 @@
 }
 
 .table .thead-light th {
-  color: rgb(222, 35, 35);
+  color: rgb(224, 202, 202);
+}
+
+.container {
+  max-width: 1500px;
 }
