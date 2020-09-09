@@ -6,10 +6,17 @@ import { ImenikListComponent } from './imenik/imenik-list/imenik-list.component'
 import { ImenikFilterPipe } from './imenik/imenik-filter.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ImenikEditComponent } from './imenik/imenik-edit/imenik-edit.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [AppComponent, ImenikListComponent, ImenikFilterPipe],
-  imports: [BrowserModule, HttpClientModule, FormsModule],
+  declarations: [
+    AppComponent,
+    ImenikListComponent,
+    ImenikFilterPipe,
+    ImenikEditComponent,
+  ],
+  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })
