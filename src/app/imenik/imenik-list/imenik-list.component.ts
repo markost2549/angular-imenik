@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ImenikListComponent implements OnInit {
   imenikList: Imenik[] = [];
   searchTerm: string;
-  isAdmin = true;
+  isAdmin = false;
   subscription: Subscription;
 
   constructor(
@@ -31,7 +31,7 @@ export class ImenikListComponent implements OnInit {
     });
   }
 
-  onEdit(imenik: Imenik) {
+  onEdit(imenik: Imenik): void {
     this.router.navigate(['edit', imenik.imenikId], { relativeTo: this.route });
   }
 

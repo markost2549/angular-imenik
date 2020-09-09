@@ -1,7 +1,6 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError, Subject } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Imenik } from './imenik.model';
 
 @Injectable({
@@ -9,8 +8,6 @@ import { Imenik } from './imenik.model';
 })
 export class ImenikService {
   baseUrl = 'http://localhost:3000';
-
-  imenikChanged = new Subject<Imenik[]>();
 
   constructor(private http: HttpClient) {}
 
