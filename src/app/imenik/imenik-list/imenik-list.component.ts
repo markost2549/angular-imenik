@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ImenikService } from '../imenik.service';
-import { Imenik } from './imenik.model';
+import { Imenik } from '../imenik.model';
+import { Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-imenik-list',
@@ -10,23 +12,39 @@ import { Imenik } from './imenik.model';
 export class ImenikListComponent implements OnInit {
   imenikList: Imenik[] = [];
   searchTerm: string;
+  isAdmin = true;
+  subscription: Subscription;
 
-  constructor(private imenikService: ImenikService) {}
+  constructor(
+    private imenikService: ImenikService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadImenik();
   }
 
-  loadImenik(): any {
-    this.imenikService.getImenik().subscribe((data) => {
-      this.imenikList = data;
-      console.log(this.imenikList);
+  loadImenik(): void {
+    this.imenikService.getImeniks().subscribe((res) => {
+      this.imenikList = res;
     });
   }
 
-  clearSearch(event: any): any {
-    if (event.key === 'Escape') {
-      this.searchTerm = '';
+  onEdit(imenik: Imenik) {
+    this.router.navigate(['edit', imenik.imenikId], { relativeTo: this.route });
+  }
+
+  deleteImenik(imenik: Imenik): void {
+    if (confirm('Are you sure to delete ')) {
+      this.imenikService.deleteImenik(imenik.imenikId).subscribe((res) => {
+        this.loadImenik();
+      });
+      console.log('Imenik deleted');
     }
+  }
+
+  clearSearch(): any {
+    this.searchTerm = '';
   }
 }

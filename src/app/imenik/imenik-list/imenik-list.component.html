@@ -4,7 +4,7 @@
       <form>
         <div class="form-group m-4">
           <input
-            (keydown)="clearSearch($event)"
+            (keydown.escape)="clearSearch()"
             class="form-control form-control-lg"
             type="text"
             placeholder="Pretraži broj"
@@ -22,14 +22,33 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">Ime</th>
+            <th scope="col">Odeljenje</th>
             <th scope="col">Broj</th>
+            <th *ngIf="isAdmin" scope="col">Operations</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let imenik of imenikList | imenikFilter: searchTerm">
-            <!-- <tr *ngFor="let imenik of imenikList; let i = index"> -->
-            <td>{{ imenik.name }}</td>
-            <td>{{ imenik.number }}</td>
+            <td>{{ imenik.naziv }}</td>
+            <td>{{ imenik.odeljenje }}</td>
+            <td>{{ imenik.broj }}</td>
+            <td *ngIf="isAdmin">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="onEdit(imenik)"
+              >
+                Edit
+              </button>
+              |
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="deleteImenik(imenik)"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
