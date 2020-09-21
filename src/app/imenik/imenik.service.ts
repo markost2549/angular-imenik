@@ -7,7 +7,7 @@ import { Imenik } from './imenik.model';
   providedIn: 'root',
 })
 export class ImenikService {
-  baseUrl = 'http://localhost:3000';
+  baseUrl = 'https://imenik-nestjs-backend.herokuapp.com';
 
   constructor(private http: HttpClient) {}
 
