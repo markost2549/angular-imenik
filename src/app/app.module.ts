@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ImenikEditComponent } from './imenik/imenik-edit/imenik-edit.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
     ImenikListComponent,
     ImenikFilterPipe,
     ImenikEditComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
   providers: [],
