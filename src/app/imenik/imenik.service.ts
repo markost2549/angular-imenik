@@ -21,6 +21,14 @@ export class ImenikService {
     return this.http.get<Imenik[]>(this.baseUrl + '/imenik', this.httpOptions);
   }
 
+  createImenik(imenik: Imenik): Observable<Imenik> {
+    return this.http.post<Imenik>(
+      this.baseUrl + '/imenik',
+      imenik,
+      this.httpOptions
+    );
+  }
+
   getImenikById(id: number): Observable<Imenik> {
     return this.http.get<Imenik>(
       this.baseUrl + '/imenik/' + id,
