@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Imenik } from '../imenik.model';
 import { ImenikService } from '../imenik.service';
@@ -21,6 +21,19 @@ export class ImenikEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getImenik();
+  }
+
+  onSubmit(f: NgForm): void {
+    this.imenikService
+      .updateImenik(f.value, this.imenikItem.imenikId)
+      .subscribe();
+    // console.log(f.value);
+    // this.getImenik();
+    this.onGoBack();
+  }
+
+  getImenik(): void {
     this.route.params.subscribe((params) => {
       this.id = +params['id'];
       this.imenikService.getImenikById(this.id).subscribe((result) => {
@@ -30,15 +43,7 @@ export class ImenikEditComponent implements OnInit {
     });
   }
 
-  onSubmit(f: NgForm) {
-    this.imenikService
-      .updateImenik(f.value, this.imenikItem.imenikId)
-      .subscribe();
-    this.onGoBack();
-    this.ngOnInit();
-  }
-
-  onGoBack() {
+  onGoBack(): void {
     this.router.navigate(['/']);
   }
 }

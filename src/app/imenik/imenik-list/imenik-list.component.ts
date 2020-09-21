@@ -46,7 +46,7 @@ export class ImenikListComponent implements OnInit {
 
   isAdminUser(): void {
     this.isAdmin = !this.isAdmin;
-    this.ngOnInit();
+    this.loadImenik();
   }
 
   clearSearch(): any {
