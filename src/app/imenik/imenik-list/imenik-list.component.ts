@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ImenikService } from '../imenik.service';
 import { Imenik } from '../imenik.model';
-import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,7 +12,7 @@ export class ImenikListComponent implements OnInit {
   imenikList: Imenik[] = [];
   searchTerm: string;
   isAdmin = false;
-  subscription: Subscription;
+  isLoading = false;
 
   constructor(
     private imenikService: ImenikService,
@@ -26,13 +25,23 @@ export class ImenikListComponent implements OnInit {
   }
 
   loadImenik(): void {
+    this.isLoading = true;
     this.imenikService.getImeniks().subscribe((res) => {
       this.imenikList = res;
+      this.isLoading = false;
     });
   }
 
   onEdit(imenik: Imenik): void {
-    this.router.navigate(['edit', imenik.imenikId], { relativeTo: this.route });
+    if (!imenik) {
+      this.router.navigate(['new'], {
+        relativeTo: this.route,
+      });
+    } else {
+      this.router.navigate(['edit', imenik.imenikId], {
+        relativeTo: this.route,
+      });
+    }
   }
 
   deleteImenik(imenik: Imenik): void {
@@ -46,7 +55,7 @@ export class ImenikListComponent implements OnInit {
 
   isAdminUser(): void {
     this.isAdmin = !this.isAdmin;
-    this.loadImenik();
+    // this.loadImenik();
   }
 
   clearSearch(): any {

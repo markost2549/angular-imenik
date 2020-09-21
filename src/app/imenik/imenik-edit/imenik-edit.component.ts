@@ -1,5 +1,5 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Imenik } from '../imenik.model';
 import { ImenikService } from '../imenik.service';
 import { NgForm } from '@angular/forms';
@@ -12,7 +12,7 @@ import { NgForm } from '@angular/forms';
 export class ImenikEditComponent implements OnInit {
   id: number;
   imenikItem: Imenik;
-  editMode: true;
+  editMode = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,21 +21,29 @@ export class ImenikEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getImenik();
+    this.route.url.subscribe((params) => {
+      if (params[1].path === 'new') {
+        this.editMode = false;
+      } else {
+        this.getImenik();
+      }
+    });
   }
 
   onSubmit(f: NgForm): void {
-    this.imenikService
-      .updateImenik(f.value, this.imenikItem.imenikId)
-      .subscribe();
-    // console.log(f.value);
-    // this.getImenik();
+    if (this.editMode) {
+      this.imenikService
+        .updateImenik(f.value, this.imenikItem.imenikId)
+        .subscribe();
+    } else {
+      this.imenikService.createImenik(f.value).subscribe();
+    }
     this.onGoBack();
   }
 
   getImenik(): void {
     this.route.params.subscribe((params) => {
-      this.id = +params['id'];
+      this.id = +params.id;
       this.imenikService.getImenikById(this.id).subscribe((result) => {
         this.imenikItem = result;
         // console.log(this.imenikItem);

@@ -16,13 +16,16 @@
       </form>
     </div>
     <div *ngIf="isAdmin" class="align-self-center p-2">
-      <button class="btn btn-primary" (click)="onEdit()">Novi</button>
+      <button class="btn btn-primary" (click)="onEdit(null)">Novi</button>
     </div>
     <div class="align-self-center">
       <button class="btn btn-info" (click)="isAdminUser()">Admin</button>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="isLoading" style="text-align: center">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <div class="row" *ngIf="!isLoading">
     <div class="col">
       <table class="table table-striped table-hover table-bordered">
         <thead class="thead-dark">
@@ -35,7 +38,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let imenik of imenikList | imenikFilter: searchTerm" sort>
+          <tr *ngFor="let imenik of imenikList | imenikFilter: searchTerm">
             <td>{{ imenik.naziv }}</td>
             <td>{{ imenik.odeljenje }}</td>
             <td>{{ imenik.lokacija }}</td>
